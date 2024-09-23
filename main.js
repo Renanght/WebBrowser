@@ -7,7 +7,7 @@ app.whenReady().then(() => {
   const win = new BrowserWindow({
     width: 800,
     height: 800,
-    icon: path.join(__dirname, 'path/to/your/icon.png'),
+    icon: path.join(__dirname, './src/assets/logo/Browserlogo.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
