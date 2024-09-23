@@ -1,4 +1,4 @@
-const { app, WebContentsView, BrowserWindow, ipcMain } = require('electron');
+const { app, WebContentsView, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('node:path');
 
 app.whenReady().then(() => {
@@ -23,7 +23,7 @@ app.whenReady().then(() => {
   // WebContentsView initiate the rendering of a second view to browser the web
   const view = new WebContentsView();
   win.contentView.addChildView(view);
-
+  Menu.setApplicationMenu(null);
   // Always fit the web rendering with the electron windows
   function fitViewToWin() {
     const winSize = win.webContents.getOwnerBrowserWindow().getBounds();
