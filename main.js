@@ -1,5 +1,6 @@
 const { app, WebContentsView, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('node:path');
+const { isMainFrame } = require('node:process');
 
 app.whenReady().then(() => {
 
@@ -23,6 +24,13 @@ app.whenReady().then(() => {
   // WebContentsView initiate the rendering of a second view to browser the web
   const view = new WebContentsView();
   win.contentView.addChildView(view);
+
+view.webContents.on('did-start-navigation', (event,url,isInPlace,isMainFrame) =>{
+  win.webContents.send('MAJnavbar',url);
+
+});
+
+
   Menu.setApplicationMenu(null);
   // Always fit the web rendering with the electron windows
   function fitViewToWin() {
@@ -69,6 +77,8 @@ app.whenReady().then(() => {
   ipcMain.handle('current-url', () => {
     return view.webContents.getURL();
   });
+
+
 
   //Register events handling from the main windows
   win.once('ready-to-show', () => {
