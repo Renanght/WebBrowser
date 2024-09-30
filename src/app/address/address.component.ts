@@ -27,13 +27,19 @@ export class AddressComponent implements OnInit {
     }
   }
 
-  onKeyDownEvent(e: any) {
+  onKeyDownEvent(e: KeyboardEvent) {
+    if (e.currentTarget===null){
+      return;
+    }
     if (e.key === 'Escape') {
-      e.currentTarget.blur();
+      window.blur();
       this.browserService.setToCurrentUrl();
     } else if (e.key === 'Enter') {
-      const value = e.currentTarget.value;
-      e.currentTarget.blur();
+      let value = this.browserService.url;
+      if(!value.startsWith("http")){
+        value = "https://" + value;
+      }
+      window.blur();
       this.goToPage(value);
     }
   }
