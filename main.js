@@ -1,4 +1,4 @@
-const { app, WebContentsView, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, WebContentsView, BrowserWindow, ipcMain, Menu,dialog } = require('electron');
 const path = require('node:path');
 const { isMainFrame } = require('node:process');
 
@@ -70,7 +70,37 @@ view.webContents.on('did-start-navigation', (event,url,isInPlace,isMainFrame) =>
   });
 
   ipcMain.handle('go-to-page', (event, url) => {
-    return view.webContents.loadURL(url);
+
+
+    if (url.substring(0, 7) !== "http://" && url.substring(0, 8) !== "https://") {
+      url = "http://" + url;
+    }
+      
+       const httpsUrl = url.replace(/^http:/, 'https:');
+
+  fetch(httpsUrl, { method: 'HEAD' }) 
+    .then(() => {
+      console.log("https");
+      view.webContents.loadURL(httpsUrl);
+    })
+    .catch(() => {
+      console.log("http");
+      fetch(url, { method: 'HEAD' })
+      .then(() => {
+        console.log("http");
+        view.webContents.loadURL(url);
+      })
+      .catch(() => {
+        console.log("site n'existe pas ");
+        
+        dialog.showMessageBox({
+          type: 'error',
+          title: 'Erreur',
+          message: 'La page n’existe pas.',
+        });
+        
+      });
+    });
   });
 
 

@@ -36,9 +36,6 @@ export class AddressComponent implements OnInit {
       this.browserService.setToCurrentUrl();
     } else if (e.key === 'Enter') {
       let value = this.browserService.url;
-      if(!value.startsWith("http")){
-        value = "https://" + value;
-      }
       window.blur();
       this.goToPage(value);
     }
