@@ -25,9 +25,16 @@ app.whenReady().then(() => {
   const view = new WebContentsView();
   win.contentView.addChildView(view);
 
-view.webContents.on('did-start-navigation', (event,url,isInPlace,isMainFrame) =>{
+//On récupère l'URL de la page web rendue
+view.webContents.on('did-naviagte-in-page', (event, url) => {
+  //Envoyer l'URL à la barre d'outils
   win.webContents.send('MAJnavbar',url);
+});
 
+view.webContents.on('did-stop-loading', () => {
+  const url = view.webContents.getURL();
+  //Envoyer l'URL à la barre d'outils
+  win.webContents.send('MAJnavbar',url);
 });
 
 
@@ -92,7 +99,7 @@ view.webContents.on('did-start-navigation', (event,url,isInPlace,isMainFrame) =>
       })
       .catch(() => {
         console.log("site n'existe pas ");
-        
+
         dialog.showMessageBox({
           type: 'error',
           title: 'Erreur',
