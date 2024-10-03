@@ -1,29 +1,51 @@
 
-import { Component, OnInit } from '@angular/core';
-import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Component, ElementRef, inject, ViewChild, OnInit,PLATFORM_ID } from '@angular/core';
+import { BrowserService } from '../browser.service';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-app-change-font',
+  selector: 'app-change-font',
   standalone: true,
-  imports: [],
+  imports: [MatIconModule, FormsModule, MatInputModule, MatButtonModule],
   templateUrl: './app-change-font.component.html',
-  styleUrl: './app-change-font.component.css'
+  styleUrls: ['./app-change-font.component.css']
 })
+export class AppChangeFontComponent implements OnInit {
 
-
-export class ChangeFontComponent implements OnInit {
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+  currentFontImage = '../../assets/logo/minecraftphoto.png'; // Image for initial font
+  defaultFontImage = '../../assets/logo/dragon.png'; // Image for default font
 
   ngOnInit() {
   }
 
   changeFont() {
-    if (isPlatformBrowser(this.platformId)) {
-      console.log("blablabla")
-      // Applique la police Arial au niveau du document
-      document.body.style.fontFamily = 'Arial, sans-serif';
+
+    if (this.currentFontImage === '../../assets/logo/minecraftphoto.png') {
+      // Change to default font and image
+      this.currentFontImage = this.defaultFontImage;
+      // Execute code to change font to default
+      (window as any).electronAPI.ChangeFontMinecraft(() => {});
+    } else {
+      // Change to Minecraft font and image
+      this.currentFontImage = '../../assets/logo/minecraftphoto.png';
+      // Execute code to change font to Minecraft
+      
+      (window as any).electronAPI.ChangeFontBlank(() => {});
+    }
+    
+
+    if ((window as any).electronAPI) {
+      
+      
     }
   }
+
+
+
+
+
 }

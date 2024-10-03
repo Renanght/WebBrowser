@@ -41,6 +41,7 @@ export class BrowserService {
         this.url = url;
       });
   }
+  
 
   updateHistory() {
     this.setToCurrentUrl();

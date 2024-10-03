@@ -7,12 +7,12 @@ import { ForwardComponent } from './forward/forward.component';
 import { RefreshComponent } from './refresh/refresh.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HomeButtonComponent } from './home-button/home-button.component';
-import { ChangeFontComponent } from "./app-change-font/app-change-font.component";
+import { AppChangeFontComponent } from "./app-change-font/app-change-font.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule, AddressComponent, BackwardComponent, DebugComponent, ForwardComponent, RefreshComponent, HomeButtonComponent, ChangeFontComponent],
+  imports: [RouterOutlet, MatToolbarModule, AddressComponent, BackwardComponent, DebugComponent, ForwardComponent, RefreshComponent, HomeButtonComponent, AppChangeFontComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

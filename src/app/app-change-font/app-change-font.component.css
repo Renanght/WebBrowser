@@ -1,0 +1,4 @@
+@font-face {
+    font-family: 'Monocraft'; /* Nom de la police */
+    src: url('../Monocraft.ttc') format('truetype'); /* Chemin vers le fichier TTC */
+  }

@@ -1,8 +1,11 @@
 const { app, WebContentsView, BrowserWindow, ipcMain, Menu,dialog } = require('electron');
+const { Console } = require('node:console');
 const path = require('node:path');
 const { isMainFrame } = require('node:process');
 
 app.whenReady().then(() => {
+
+  let css;
 
   // BrowserWindow initiate the rendering of the angular toolbar
   const win = new BrowserWindow({
@@ -31,6 +34,7 @@ view.webContents.on('did-naviagte-in-page', (event, url) => {
   win.webContents.send('MAJnavbar',url);
 });
 
+
 view.webContents.on('did-stop-loading', () => {
   const url = view.webContents.getURL();
   //Envoyer l'URL à la barre d'outils
@@ -47,14 +51,27 @@ view.webContents.on('did-stop-loading', () => {
 
     win.webContents.openDevTools({ mode: 'detach' });
 
-  // Register events handling from the toolbar
-  ipcMain.on('toogle-dev-tool', () => {
-    if (winContent.isDevToolsOpened()) {
+    // Register events handling from the toolbar
+    ipcMain.on('toogle-dev-tool', () => {
+    if (win.webContents.isDevToolsOpened()) {
       win.webContents.closeDevTools();
     } else {
       win.webContents.openDevTools({ mode: 'detach' });
+      view.webContents.openDevTools({ mode: 'detach' })
     }
   });
+
+
+  ipcMain.on('Change-Font-Minecraft', () => {
+    view.webContents.insertCSS(`* { font-family: 'Monocraft', sans-serif; }`).then(data => {
+      this.css = data;
+   });; 
+  });
+
+  ipcMain.on('Change-Font-Blank', () => {
+    view.webContents.removeInsertedCSS(this.css); 
+  });
+
 
   ipcMain.on('go-back', () => {
     view.webContents.navigationHistory.goBack();

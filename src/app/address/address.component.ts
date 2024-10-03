@@ -19,6 +19,7 @@ export class AddressComponent implements OnInit {
   public currentUrl:String = '';
 
   ngOnInit(): void{
+    
     if ((window as any).electronAPI) {
       (window as any).electronAPI.MajAddress((event:any,url:string) => {
         this.currentUrl = url;

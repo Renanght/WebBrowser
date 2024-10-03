@@ -3,3 +3,8 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@font-face {
+    font-family: 'Monocraft'; /* Nom de la police */
+    src: url('app/Monocraft.ttc') format('truetype'); /* Chemin vers le fichier TTC */
+  }

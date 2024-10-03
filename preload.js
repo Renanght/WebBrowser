@@ -5,6 +5,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   goBack: () => ipcRenderer.send('go-back'),
   goForward: () => ipcRenderer.send('go-forward'),
   refresh: () => ipcRenderer.send('refresh'),
+  ChangeFontMinecraft: () => ipcRenderer.send('Change-Font-Minecraft'),
+  ChangeFontBlank: () => ipcRenderer.send('Change-Font-Blank'),
 
   MajAddress: (callback) => ipcRenderer.on('MAJnavbar',callback),
 
