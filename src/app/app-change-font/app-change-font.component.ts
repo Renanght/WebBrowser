@@ -17,7 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class AppChangeFontComponent implements OnInit {
 
   currentFontImage = '../../assets/logo/minecraftphoto.png'; // Image for initial font
-  defaultFontImage = '../../assets/logo/dragon.png'; // Image for default font
+  defaultFontImage = '../../assets/logo/minecraftphotobarree.png'; // Image for default font
 
   ngOnInit() {
   }
