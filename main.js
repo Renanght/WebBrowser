@@ -63,9 +63,24 @@ view.webContents.on('did-stop-loading', () => {
 
 
   ipcMain.on('Change-Font-Minecraft', () => {
-    view.webContents.insertCSS(`* { font-family: 'Monocraft', sans-serif; }`).then(data => {
+    view.webContents.insertCSS(`
+      @font-face {
+        font-family: 'Minecraft';
+        src: url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.eot');
+        src: url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.eot?#iefix') format('embedded-opentype'),
+             url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.woff2') format('woff2'),
+             url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.woff') format('woff'),
+             url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.ttf') format('truetype'),
+             url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.svg#minecraft') format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+      * {
+        font-family: 'Minecraft', sans-serif;
+      }
+    `).then(data => {
       this.css = data;
-   });; 
+    });
   });
 
   ipcMain.on('Change-Font-Blank', () => {
