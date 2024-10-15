@@ -5,8 +5,9 @@ const { isMainFrame } = require('node:process');
 
 app.whenReady().then(() => {
 
-  let css;
-
+  let css ;
+  let cssEncours;
+  
   // BrowserWindow initiate the rendering of the angular toolbar
   const win = new BrowserWindow({
     width: 800,
@@ -39,6 +40,29 @@ view.webContents.on('did-stop-loading', () => {
   const url = view.webContents.getURL();
   //Envoyer l'URL à la barre d'outils
   win.webContents.send('MAJnavbar',url);
+
+  if (this.css > 0) {
+    view.webContents.insertCSS(`
+      @font-face {
+        font-family: 'Minecraft';
+        src: url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.eot');
+        src: url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.eot?#iefix') format('embedded-opentype'),
+             url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.woff2') format('woff2'),
+             url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.woff') format('woff'),
+             url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.ttf') format('truetype'),
+             url('https://cdn.jsdelivr.net/npm/typeface-minecraft/files/minecraft.svg#minecraft') format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+      * {
+        font-family: 'Minecraft', sans-serif;
+      }
+    `).then(data => {
+      this.css = data;
+    });
+
+  } 
+
 });
 
 
@@ -85,6 +109,7 @@ view.webContents.on('did-stop-loading', () => {
 
   ipcMain.on('Change-Font-Blank', () => {
     view.webContents.removeInsertedCSS(this.css); 
+    this.css = 0;
   });
 
 
@@ -109,7 +134,7 @@ view.webContents.on('did-stop-loading', () => {
   });
 
   ipcMain.handle('go-to-page', (event, url) => {
-
+    console.info("test");
 
     if (url.substring(0, 7) !== "http://" && url.substring(0, 8) !== "https://") {
       url = "http://" + url;
@@ -140,6 +165,9 @@ view.webContents.on('did-stop-loading', () => {
         
       });
     });
+
+
+    
   });
 
 
